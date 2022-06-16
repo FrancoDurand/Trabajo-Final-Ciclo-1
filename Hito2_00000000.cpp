@@ -115,7 +115,8 @@ char** setear_tablero()
 	return tablero;
 }
 
-string[2] registrar_nombres(){
+string[2] registrar_nombres()
+{
 	string nombres[2];
 
 	cls;
@@ -128,9 +129,8 @@ string[2] registrar_nombres(){
 	return nombres;
 }
 
-void jugar(){
-
-
+void jugar()
+{
 	cls;
 
 	char** tablero = setear_tablero();
