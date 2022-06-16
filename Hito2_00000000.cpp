@@ -18,7 +18,6 @@ int main()
         switch (opcion)
         {
         case'1':
-            setear_tablero();
             getch();
             break;
         }
