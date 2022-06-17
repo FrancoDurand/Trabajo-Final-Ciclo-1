@@ -5,9 +5,11 @@
 using namespace std;
 using namespace System;
 
-char** setear_tablero()
+char** tablero;
+
+void setear_tablero()
 {
-	char** tablero = new char*[25];
+	tablero = new char*[25];
 
 	for (int i = 0; i < 25; i++)
 		tablero[i] = new char[50]; //creacion de matriz
@@ -31,8 +33,8 @@ char** setear_tablero()
 	tablero[24][10] = char(66);
 	tablero[24][18] = char(67);
 	tablero[24][25] = char(68);
-	tablero[24][33] = char(69);
-	tablero[24][42] = char(70);
+	tablero[24][32] = char(69);
+	tablero[24][40] = char(70);
 	tablero[24][49] = char(71);
 
 
@@ -111,29 +113,13 @@ char** setear_tablero()
 			else
 				continue;
 		}
-
-	return tablero;
-}
-
-string* registrar_nombres()
-{
-	string* nombres = new string [2];
-
-	cls;
-
-	cout << "Nombre jugador 1:";
-	cin >> nombres[0];
-	cout << "Nombre jugador 2:";
-	cin >> nombres[1];
-
-	return nombres;
 }
 
 void jugar()
 {
 	cls;
 
-	char** tablero = setear_tablero();
+	setear_tablero();
 
 	for (int i = 1; i <= 3; i++)
 		cout << endl;
@@ -169,7 +155,7 @@ int main()
 		}
 
 	} while (true);
-
+	
 	getch();
 }
 
@@ -246,7 +232,7 @@ tablero[0][20] = char(187)
 																					
 																																				
 																																			
-                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄       █        █
+				  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄       █        █
   █       █       █             █       █        █
   █       █       █             █       █        █ 
 4 █■■■■■■■█■■■■■■■█             █■■■■■■■█■■■■■■■■█
