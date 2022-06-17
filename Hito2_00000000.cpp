@@ -115,9 +115,9 @@ char** setear_tablero()
 	return tablero;
 }
 
-string[2] registrar_nombres()
+string* registrar_nombres()
 {
-	string nombres[2];
+	string* nombres = new string [2];
 
 	cls;
 
