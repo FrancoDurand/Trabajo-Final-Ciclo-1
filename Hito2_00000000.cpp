@@ -59,7 +59,7 @@ using namespace std;
 using namespace System;
 
 struct {
-	string nombre;
+	string <nombre;
 	char ficha;
 	short cant_fichas = 9;
 	short cant_mov = 0;
@@ -912,7 +912,7 @@ void recibir_jugada_fase1() {
 
 		obtener_coordenadas();
 	} while (verificar_espacio_libre() == false);
-
+	
 	guardar_datos_fase1();
 }
 
@@ -920,7 +920,7 @@ void fase1() {
 	//i = 0: jugador1, i = 1: jugador2
 	//j = fichas
 	//if empieza_j1 == true i = 0 else i = 1
-	for (j = 0; jugador[0].fichas_puestas < 9; j++) {
+	for (j = 0; jugador[0].fichas_puestas < 9 || jugador[1].fichas_puestas < 9; j++) {
 		recibir_jugada_fase1();
 
 		imprimir_tablero();
@@ -928,10 +928,11 @@ void fase1() {
 		/*
 		//cambio de fila en matriz fichas
 		i++;
-		if (i > 1)
+		if (i >= 2)
 			i = 0;
 
-		recibir_jugada_fase1(i, j);
+		recibir_jugada_fase1();
+		//imprimir_tablero() <- agregar para jugador2
 
 		//cambio de fila en matriz fichas
 		i++;
@@ -940,16 +941,14 @@ void fase1() {
 		*/
 
 		jugador[i].fichas_puestas++;
-		//jugador2.fichas_puestas++;
-		//imprimir_tablero() <- agregar para jugador2
 	}
 }
 
 void asignar_turnos() {
 	Random rng;
 
-	if (rng.Next(0, 3) % 2 != 0) {
-		empieza_j1 = true;
+	if (rng.Next(0, 2) % 2 != 0) {
+		//empieza_j1 = true;
 		i = 0;
 
 		cout << "Empieza";
@@ -987,7 +986,7 @@ void asignar_turnos() {
 		}
 	}
 	else {
-		empieza_j1 = false;
+		//empieza_j1 = false;
 		i = 0;//modificar i = 1 para 2 jugadores
 
 		cout << "Empieza";
