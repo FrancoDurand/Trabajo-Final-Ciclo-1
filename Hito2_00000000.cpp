@@ -73,7 +73,7 @@ typedef struct {
 } ficha;
 
 char opcion, posicion_elegida, posicion_previa;
-bool empieza_j1, hay_ficha;
+bool hay_ficha;
 short x, y, i, j;
 ficha** fichas;
 char** tablero;
@@ -109,6 +109,7 @@ void setear_tablero();
 void imprimir_tablero();
 
 void jugar();
+
 //------------------------------------------------------------------------------
 
 int main() {
@@ -122,6 +123,7 @@ int main() {
 }
 
 //------------------------------------------------------------------------------
+
 void obtener_coordenadas() {
 	switch (posicion_elegida)
 	{
@@ -248,10 +250,10 @@ void obtener_coordenadas() {
 }
 
 bool verificar_espacio_libre() {
-	if (tablero[x][y] == jugador[0].ficha || tablero[x][y] == jugador[1].ficha)
-		return false;
-	else
+	if (tablero[x][y] != jugador[0].ficha && tablero[x][y] != jugador[1].ficha)
 		return true;
+	else
+		return false;
 }
 
 bool puede_mover() {
@@ -1188,4 +1190,3 @@ void jugar() {
 
 	fase2();
 }
-
