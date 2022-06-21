@@ -59,7 +59,7 @@ using namespace std;
 using namespace System;
 
 struct {
-	string <nombre;
+	string nombre;
 	char ficha;
 	short cant_fichas = 9;
 	short cant_mov = 0;
@@ -920,12 +920,16 @@ void fase1() {
 	//i = 0: jugador1, i = 1: jugador2
 	//j = fichas
 	//if empieza_j1 == true i = 0 else i = 1
-	for (j = 0; jugador[0].fichas_puestas < 9 || jugador[1].fichas_puestas < 9; j++) {
+	for (j = 0; jugador[0].fichas_puestas < 9; j++) {
 		recibir_jugada_fase1();
 
 		imprimir_tablero();
 
 		/*
+
+
+
+
 		//cambio de fila en matriz fichas
 		i++;
 		if (i >= 2)
