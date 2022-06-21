@@ -2,7 +2,7 @@
 #include <conio.h>
 
 #define cls system("cls") //borra consola
-#define blanco char(157) //Ø
+#define blanco char(157) //Ã˜
 #define negro char(64) //@
 
 #define A tablero[0][2]
@@ -1099,7 +1099,7 @@ void setear_tablero() {
 	for (int i = 5; i <= 17; i++)
 		tablero[i][40] = char(219);
 
-	//bordes cuadrado pequeño
+	//bordes cuadrado pequeÃ±o
 		//fila arriba
 	for (int j = 19; j <= 31; j++)
 		tablero[8][j] = char(223);
