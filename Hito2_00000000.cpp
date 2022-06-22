@@ -1,9 +1,10 @@
 #include <iostream>
 #include <conio.h>
+#include <Windows.h>
 
 #define cls system("cls") //borra consola
-#define blanco char(157) //Ø
-#define negro char(64) //@
+#define blanco char(2) //Ø
+#define negro char(1) //@
 
 #define A tablero[0][2]
 #define B tablero[0][25]
@@ -68,21 +69,28 @@ struct {
 } jugador[2];
 
 typedef struct {
-	char letra;
-	bool molino = false;
+	char letra; //donde esta ubicado
+	bool vivo = true; //despues de comer, bloquea el uso
+	bool molino = false; //si pertenece a un molino, bloquea de ser comida
 } ficha;
 
 char opcion, posicion_elegida, posicion_previa;
-bool hay_ficha;
+bool hay_ficha, horizontal, vertical, diagonal;
 short x, y, i, j;
 ficha** fichas;
 char** tablero;
 
 //------------------------------------------------------------------------------
 
+void cambiar_turno();
+
 void obtener_coordenadas();
 
 bool verificar_espacio_libre();
+
+bool verificar_molino();
+
+bool puede_recibir();
 
 bool puede_mover();
 
@@ -123,6 +131,13 @@ int main() {
 }
 
 //------------------------------------------------------------------------------
+
+void cambiar_turno() {
+	i++;
+
+	if (i >= 2)
+		i = 0;
+}
 
 void obtener_coordenadas() {
 	switch (posicion_elegida)
@@ -214,7 +229,7 @@ void obtener_coordenadas() {
 
 	case 'R':
 		x = 14;
-		y = 25;
+		y = 32;
 		break;
 
 	case 'S':
@@ -254,6 +269,1614 @@ bool verificar_espacio_libre() {
 		return true;
 	else
 		return false;
+}
+
+bool verificar_molino() {
+	horizontal = false, vertical = false, diagonal = false;
+
+	switch (posicion_elegida)
+	{
+	case 'A':
+		//horizontal
+		if (B == jugador[i].ficha && C == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'B') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'C') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (J == jugador[i].ficha && V == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'J') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'V') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (D == jugador[i].ficha && G == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'D') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'G') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case'B':
+		//horizontal
+		if (A == jugador[i].ficha && C == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'A') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'C') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (E == jugador[i].ficha && H == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'E') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'H') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'C':
+		//horizontal
+		if (A == jugador[i].ficha && B == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'A') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'B') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (O == jugador[i].ficha && X == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'O') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'X') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (F == jugador[i].ficha && I == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'F') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'I') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'D':
+		//horizontal
+		if (E == jugador[i].ficha && F == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'E') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'F') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (K == jugador[i].ficha && S == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'K') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'S') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (A == jugador[i].ficha && G == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'A') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'G') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'E':
+		//horizontal
+		if (D == jugador[i].ficha && F == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'D') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'F') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (B == jugador[i].ficha && H == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'B') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'H') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'F':
+		//horizontal
+		if (D == jugador[i].ficha && E == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'D') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'E') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (N == jugador[i].ficha && U == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'N') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'U') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (C == jugador[i].ficha && I == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'C') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'I') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case'G':
+		//horizontal
+		if (H == jugador[i].ficha && I == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'H') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'I') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (L == jugador[i].ficha && P == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'L') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'P') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (A == jugador[i].ficha && D == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'A') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'D') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case'H':
+		//horizontal
+		if (G == jugador[i].ficha && I == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'G') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'I') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (B == jugador[i].ficha && E == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'B') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'E') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'I':
+		//horizontal
+		if (G == jugador[i].ficha && H == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'G') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'H') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (M == jugador[i].ficha && R == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'M') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'R') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (C == jugador[i].ficha && F == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'C') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'F') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case'J':
+		//horizontal
+		if (K == jugador[i].ficha && L == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'K') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'L') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (A == jugador[i].ficha && V == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'A') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'V') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'K':
+		//horizontal
+		if (J == jugador[i].ficha && L == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'J') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'L') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (D == jugador[i].ficha && S == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'D') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'S') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'L':
+		//horizontal
+		if (J == jugador[i].ficha && K == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'J') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'K') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (G == jugador[i].ficha && P == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'G') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'P') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'M':
+		//horizontal
+		if (N == jugador[i].ficha && O == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'N') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'O') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (I == jugador[i].ficha && R == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'I') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'R') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'N':
+		//horizontal
+		if (M == jugador[i].ficha && O == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'M') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'O') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (F == jugador[i].ficha && U == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'F') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'U') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'O':
+		//horizontal
+		if (M == jugador[i].ficha && N == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'M') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'N') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (C == jugador[i].ficha && X == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'C') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'X') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'P':
+		//horizontal
+		if (Q == jugador[i].ficha && R == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'Q') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'R') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (G == jugador[i].ficha && L == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'G') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'L') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (S == jugador[i].ficha && V == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'S') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'V') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'Q':
+		//horizontal
+		if (P == jugador[i].ficha && R == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'P') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'R') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (T == jugador[i].ficha && W == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'T') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'W') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'R':
+		//horizontal
+		if (P == jugador[i].ficha && Q == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'R') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'Q') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (I == jugador[i].ficha && M == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'I') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'M') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (U == jugador[i].ficha && X == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'U') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'X') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case'S':
+		//horizontal
+		if (T == jugador[i].ficha && U == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'T') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'U') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (D == jugador[i].ficha && K == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'D') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'K') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (P == jugador[i].ficha && V == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'P') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'V') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'T':
+		//horizontal
+		if (S == jugador[i].ficha && U == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'S') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'U') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (Q == jugador[i].ficha && W == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'Q') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'W') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'U':
+		//horizontal
+		if (S == jugador[i].ficha && T == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'S') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'T') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (F == jugador[i].ficha && N == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'F') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'N') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (R == jugador[i].ficha && X == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'R') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'X') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case'V':
+		//horizontal
+		if (W == jugador[i].ficha && X == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'W') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'X') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (A == jugador[i].ficha && J == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'A') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'J') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (P == jugador[i].ficha && S == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'P') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'S') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'W':
+		//horizontal
+		if (V == jugador[i].ficha && X == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'V') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'X') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (Q == jugador[i].ficha && T == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'Q') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'T') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'X':
+		//horizontal
+		if (V == jugador[i].ficha && W == jugador[i].ficha) {
+			horizontal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'V') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'W') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//vertical
+		if (C == jugador[i].ficha && O == jugador[i].ficha) {
+			vertical = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'C') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'O') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		//diagonal
+		if (R == jugador[i].ficha && U == jugador[i].ficha) {
+			diagonal = true;
+
+			fichas[i][j].molino = true;
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'R') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+
+			for (j = 0; j < 9; j++) {
+				if (fichas[i][j].letra == 'U') {
+					fichas[i][j].molino = true;
+					break;
+				}
+			}
+		}
+
+		if (horizontal == true || vertical == true || diagonal == true)
+			return true;
+		else
+			return false;
+		break;
+	}
+}
+
+bool puede_recibir() {
+	switch (posicion_previa)
+	{
+	case 'A':
+		if (posicion_elegida == 'B' || posicion_elegida == 'J')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'B':
+		if (posicion_elegida == 'A' || posicion_elegida == 'C' || posicion_elegida == 'E')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'C':
+		if (posicion_elegida == 'B' || posicion_elegida == 'O')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'D':
+		if (posicion_elegida == 'E' || posicion_elegida == 'K')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'E':
+		if (posicion_elegida == 'B' || posicion_elegida == 'D' || posicion_elegida == 'F' || posicion_elegida == 'H')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'F':
+		if (posicion_elegida == 'E' || posicion_elegida == 'N')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'G':
+		if (posicion_elegida == 'H' || posicion_elegida == 'L')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'H':
+		if (posicion_elegida == 'E' || posicion_elegida == 'G' || posicion_elegida == 'I')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'I':
+		if (posicion_elegida == 'H' || posicion_elegida == 'M')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'J':
+		if (posicion_elegida == 'A' || posicion_elegida == 'K' || posicion_elegida == 'V')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'K':
+		if (posicion_elegida == 'D' || posicion_elegida == 'J' || posicion_elegida == 'L' || posicion_elegida == 'S')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'L':
+		if (posicion_elegida == 'G' || posicion_elegida == 'K' || posicion_elegida == 'P')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'M':
+		if (posicion_elegida == 'I' || posicion_elegida == 'N' || posicion_elegida == 'R')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'N':
+		if (posicion_elegida == 'F' || posicion_elegida == 'M' || posicion_elegida == 'O' || posicion_elegida == 'U')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'O':
+		if (posicion_elegida == 'C' || posicion_elegida == 'N' || posicion_elegida == 'X')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'P':
+		if (posicion_elegida == 'L' || posicion_elegida == 'Q')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'Q':
+		if (posicion_elegida == 'P' || posicion_elegida == 'R' || posicion_elegida == 'T')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'R':
+		if (posicion_elegida == 'M' || posicion_elegida == 'Q')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'S':
+		if (posicion_elegida == 'K' || posicion_elegida == 'T')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'T':
+		if (posicion_elegida == 'Q' || posicion_elegida == 'S' || posicion_elegida == 'U' || posicion_elegida == 'W')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'U':
+		if (posicion_elegida == 'N' || posicion_elegida == 'T')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'V':
+		if (posicion_elegida == 'J' || posicion_elegida == 'W')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'W':
+		if (posicion_elegida == 'T' || posicion_elegida == 'V' || posicion_elegida == 'X')
+			return true;
+		else
+			return false;
+		break;
+
+	case 'X':
+		if (posicion_elegida == 'O' || posicion_elegida == 'W')
+			return true;
+		else
+			return false;
+		break;
+	}
 }
 
 bool puede_mover() {
@@ -748,7 +2371,7 @@ void recibir_jugada_fase2() {
 				break;
 			}
 		}
-	} while (hay_ficha == false || puede_mover() == false);
+	} while ((hay_ficha == false || fichas[i][j].vivo == false) || (puede_mover() == false && jugador[i].fase3 == false));
 
 	do {
 		do {
@@ -759,18 +2382,30 @@ void recibir_jugada_fase2() {
 		} while (posicion_elegida < 'A' || posicion_elegida > 'X');
 
 		obtener_coordenadas();
-	} while (verificar_espacio_libre() == false);
+	} while (verificar_espacio_libre() == false || (puede_recibir() == false && jugador[i].fase3 == false));
 
 	mover();
 	actualizar_datos_fase2();
 }
 
 void fase2() {
-	while (jugador[0].cant_fichas > 2 || jugador[1].cant_fichas > 2)
+	while (jugador[0].cant_fichas > 2 && jugador[1].cant_fichas > 2)
 	{
 		recibir_jugada_fase2();
 
 		imprimir_tablero();
+
+		cambiar_turno();
+
+		/*if (verificar_molino() == true) {
+			comer();
+		}*/
+
+		recibir_jugada_fase2();
+
+		imprimir_tablero();
+
+		cambiar_turno();
 	}
 
 }
@@ -914,39 +2549,28 @@ void recibir_jugada_fase1() {
 
 		obtener_coordenadas();
 	} while (verificar_espacio_libre() == false);
-	
+
 	guardar_datos_fase1();
 }
 
 void fase1() {
-	//i = 0: jugador1, i = 1: jugador2
-	//j = fichas
-	//if empieza_j1 == true i = 0 else i = 1
-	for (j = 0; jugador[0].fichas_puestas < 9; j++) {
+
+	for (j = 0; jugador[0].fichas_puestas < 9 || jugador[1].fichas_puestas < 9; j++) {
 		recibir_jugada_fase1();
 
 		imprimir_tablero();
 
-		/*
+		jugador[i].fichas_puestas++;
 
-
-
-
-		//cambio de fila en matriz fichas
-		i++;
-		if (i >= 2)
-			i = 0;
+		cambiar_turno();
 
 		recibir_jugada_fase1();
-		//imprimir_tablero() <- agregar para jugador2
 
-		//cambio de fila en matriz fichas
-		i++;
-		if (i > 1)
-			i = 0;
-		*/
+		imprimir_tablero();
 
 		jugador[i].fichas_puestas++;
+
+		cambiar_turno();
 	}
 }
 
@@ -959,16 +2583,16 @@ void asignar_turnos() {
 
 		cout << "Empieza";
 
-		_sleep(800);
+		Sleep(700);
 		cout << ".";
 
-		_sleep(800);
+		Sleep(700);
 		cout << ".";
 
-		_sleep(800);
+		Sleep(700);
 		cout << ". ";
 
-		_sleep(800);
+		Sleep(700);
 		cout << jugador[0].nombre << endl << endl;
 		cout << "PRESIONA UNA TECLA PARA CONTINUAR";
 		getch();
@@ -992,21 +2616,20 @@ void asignar_turnos() {
 		}
 	}
 	else {
-		//empieza_j1 = false;
-		i = 0;//modificar i = 1 para 2 jugadores
+		i = 1;
 
 		cout << "Empieza";
 
-		_sleep(800);
+		Sleep(700);
 		cout << ".";
 
-		_sleep(800);
+		Sleep(700);
 		cout << ".";
 
-		_sleep(800);
+		Sleep(700);
 		cout << ". ";
 
-		_sleep(800);
+		Sleep(700);
 		cout << jugador[1].nombre << endl << endl;
 		cout << "PRESIONA UNA TECLA PARA CONTINUAR";
 		getch();
@@ -1063,7 +2686,6 @@ void setear_tablero() {
 
 	for (int i = 0; i < 25; i++)
 		tablero[i] = new char[50]; //creacion de matriz
-
 
 	//lienzo en blanco
 	for (int i = 0; i < 25; i++) {
@@ -1136,7 +2758,7 @@ void setear_tablero() {
 	}
 
 	//poner letras
-	A = a0;
+	A = a0; //tablero[0][2] = char(65)
 	B = b0;
 	C = c0;
 	D = d0;
@@ -1160,6 +2782,32 @@ void setear_tablero() {
 	V = v0;
 	W = w0;
 	X = x0;
+
+	//poner guias
+	tablero[1][3] = a0;
+	tablero[1][26] = b0;
+	tablero[1][48] = c0;
+	tablero[5][11] = d0;
+	tablero[5][26] = e0;
+	tablero[5][39] = f0;
+	tablero[9][19] = g0;
+	tablero[9][25] = h0;
+	tablero[9][31] = i0;
+	tablero[12][3] = j0;
+	tablero[12][11] = k0;
+	tablero[11][19] = l0;
+	tablero[11][31] = m0;
+	tablero[12][39] = n0;
+	tablero[12][48] = o0;
+	tablero[13][19] = p0;
+	tablero[13][25] = q0;
+	tablero[13][31] = r0;
+	tablero[17][11] = s0;
+	tablero[17][26] = t0;
+	tablero[17][39] = u0;
+	tablero[21][3] = v0;
+	tablero[21][26] = w0;
+	tablero[21][48] = x0;
 }
 
 void imprimir_tablero() {
