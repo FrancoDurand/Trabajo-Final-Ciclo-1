@@ -3,8 +3,8 @@
 #include <Windows.h>
 
 #define cls system("cls") //borra consola
-#define blanco char(2) //Ø
-#define negro char(1) //@
+#define blanco char(127) //
+#define negro char(30) //
 
 #define A tablero[0][2]
 #define B tablero[0][25]
@@ -88,6 +88,10 @@ void obtener_coordenadas();
 
 bool verificar_espacio_libre();
 
+bool puede_comer();
+
+void comer();
+
 bool verificar_molino();
 
 bool puede_recibir();
@@ -140,8 +144,7 @@ void cambiar_turno() {
 }
 
 void obtener_coordenadas() {
-	switch (posicion_elegida)
-	{
+	switch (posicion_elegida) {
 	case 'A':
 		x = 0;
 		y = 2;
@@ -174,7 +177,7 @@ void obtener_coordenadas() {
 
 	case 'G':
 		x = 8;
-		y = 10;
+		y = 18;
 		break;
 
 	case 'H':
@@ -271,11 +274,470 @@ bool verificar_espacio_libre() {
 		return false;
 }
 
+bool puede_comer() {
+	switch (posicion_elegida) {
+	case 'A':
+		if (A != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'B':
+		if (B != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'C':
+		if (C != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'D':
+		if (D != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'E':
+		if (E != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'F':
+		if (F != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'G':
+		if (G != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'H':
+		if (H != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'I':
+		if (I != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'J':
+		if (J != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'K':
+		if (K != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'L':
+		if (L != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'M':
+		if (M != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'N':
+		if (N != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'O':
+		if (O != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'P':
+		if (P != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'Q':
+		if (Q != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'R':
+		if (R != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'S':
+		if (S != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'T':
+		if (T != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'U':
+		if (U != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'V':
+		if (V != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'W':
+		if (W != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+
+	case 'X':
+		if (X != jugador[i].ficha)
+			return true;
+		else
+			return false;
+		break;
+	}
+}
+
+void comer() {
+	cambiar_turno();
+
+	switch (posicion_elegida) {
+	case 'A':
+		A = a0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'A') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'B':
+		B = b0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'B') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'C':
+		C = c0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'C') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'D':
+		D = d0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'D') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'E':
+		E = e0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'E') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'F':
+		F = f0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'F') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'G':
+		G = g0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'G') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'H':
+		H = h0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'H') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'I':
+		I = i0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'I') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'J':
+		J = j0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'J') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'K':
+		K = k0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'K') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'L':
+		L = l0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'L') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'M':
+		M = m0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'M') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'N':
+		N = n0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'N') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'O':
+		O = o0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'O') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'P':
+		P = p0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'P') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'Q':
+		Q = q0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'Q') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'R':
+		R = r0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'R') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'S':
+		S = s0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'S') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'T':
+		T = t0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'T') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'U':
+		U = u0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'U') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'V':
+		V = v0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'V') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'W':
+		W = w0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'W') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+
+	case 'X':
+		X = x0;
+
+		for (j = 0; j < 9; j++) {
+			if (fichas[i][j].letra == 'X') {
+				fichas[i][j].vivo = false;
+				break;
+			}
+		}
+		break;
+	}
+
+	jugador[i].cant_fichas--;
+	cambiar_turno();
+}
+
+void recibir_comer() {
+	cout << "MOLINO" << endl;
+
+	do {
+		cout << "FICHA A COMER:";
+		cin >> posicion_elegida;
+
+		posicion_elegida = toupper(posicion_elegida);
+
+		obtener_coordenadas();
+	} while (verificar_espacio_libre() == true || puede_comer() == false);
+
+	comer();
+}
+
 bool verificar_molino() {
 	horizontal = false, vertical = false, diagonal = false;
 
-	switch (posicion_elegida)
-	{
+	switch (posicion_elegida) {
 	case 'A':
 		//horizontal
 		if (B == jugador[i].ficha && C == jugador[i].ficha) {
@@ -1707,8 +2169,7 @@ bool verificar_molino() {
 }
 
 bool puede_recibir() {
-	switch (posicion_previa)
-	{
+	switch (posicion_previa) {
 	case 'A':
 		if (posicion_elegida == 'B' || posicion_elegida == 'J')
 			return true;
@@ -1880,8 +2341,7 @@ bool puede_recibir() {
 }
 
 bool puede_mover() {
-	switch (posicion_elegida)
-	{
+	switch (posicion_elegida) {
 	case 'A':
 		if (B == b0 || J == j0)
 			return true;
@@ -2055,8 +2515,7 @@ bool puede_mover() {
 }
 
 void mover() {
-	switch (posicion_previa)
-	{
+	switch (posicion_previa) {
 	case 'A':
 		A = a0;
 
@@ -2252,8 +2711,7 @@ void mover() {
 }
 
 void actualizar_datos_fase2() {
-	switch (posicion_elegida)
-	{
+	switch (posicion_elegida) {
 	case 'A':
 		fichas[i][j].letra = posicion_elegida;
 		break;
@@ -2366,12 +2824,12 @@ void recibir_jugada_fase2() {
 		} while (posicion_elegida < 'A' || posicion_elegida > 'X');
 
 		for (j = 0; j < 9; j++) {
-			if (fichas[i][j].letra == posicion_elegida) {
+			if (fichas[i][j].letra == posicion_elegida && fichas[i][j].vivo == true) {
 				hay_ficha = true;
 				break;
 			}
 		}
-	} while ((hay_ficha == false || fichas[i][j].vivo == false) || (puede_mover() == false && jugador[i].fase3 == false));
+	} while (hay_ficha == false || (puede_mover() == false && jugador[i].fase3 == false));
 
 	do {
 		do {
@@ -2389,21 +2847,18 @@ void recibir_jugada_fase2() {
 }
 
 void fase2() {
-	while (jugador[0].cant_fichas > 2 && jugador[1].cant_fichas > 2)
-	{
-		recibir_jugada_fase2();
-
-		imprimir_tablero();
-
-		cambiar_turno();
-
-		/*if (verificar_molino() == true) {
-			comer();
-		}*/
+	while (jugador[0].cant_fichas > 2 && jugador[1].cant_fichas > 2) {
+		/*for (j = 0; j < 9; j++)
+			cout << fichas[i][j].letra << "vivo:" << fichas[i][j].vivo << endl;*/
 
 		recibir_jugada_fase2();
 
 		imprimir_tablero();
+
+		if (verificar_molino() == true) {
+			recibir_comer();
+			imprimir_tablero();
+		}
 
 		cambiar_turno();
 	}
@@ -2411,8 +2866,7 @@ void fase2() {
 }
 
 void guardar_datos_fase1() {
-	switch (posicion_elegida)
-	{
+	switch (posicion_elegida) {
 	case 'A':
 		A = jugador[i].ficha;
 		fichas[i][j].letra = posicion_elegida;
@@ -2536,8 +2990,8 @@ void guardar_datos_fase1() {
 }
 
 void recibir_jugada_fase1() {
-	//if (empieza_j1 == true) falta ordenar turnos, con j ingresar fichas[i][j].letra
 	cout << "TURNO: " << jugador[i].nombre << endl;
+	cout << "FICHAS POR PONER: " << 9 - jugador[i].fichas_puestas << endl;
 
 	do {
 		do {
@@ -2578,7 +3032,6 @@ void asignar_turnos() {
 	Random rng;
 
 	if (rng.Next(0, 2) % 2 != 0) {
-		//empieza_j1 = true;
 		i = 0;
 
 		cout << "Empieza";
