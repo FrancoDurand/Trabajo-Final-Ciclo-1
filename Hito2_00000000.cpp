@@ -5,7 +5,7 @@
 
 #define cls system("cls") //borra consola
 #define blanco char(30) //▲
-#define negro char(127) //⌂
+#define negro char(5) //♣
 
 #define A tablero[0][2]
 #define B tablero[0][25]
@@ -81,7 +81,7 @@ typedef struct {
 } ficha;
 
 char opcion, posicion_elegida, posicion_previa, posicion_comida;
-bool hay_ficha, horizontal, vertical, diagonal, es_molino, comio_molino;
+bool hay_ficha, horizontal, vertical, diagonal;
 short x, y, i, j, k;
 ficha** fichas;
 char** tablero, ** molino, ** reglas, ** upc, ** opciones_1, ** opciones_2, ** opciones_3;
@@ -116,8 +116,6 @@ bool puede_comer();
 void comer();
 
 void recibir_comer();
-
-void actualizar_molinos();
 
 bool verificar_molino();
 
@@ -763,8 +761,8 @@ bool todas_molino() {
 }
 
 void recibir_comer() {
-	es_molino = true;
-	comio_molino = false;
+	//es_molino = true;
+	//comio_molino = false;
 
 	cout << "\t\t\t" << jugador[i].nombre << " HIZO MOLINO" << endl;
 
@@ -777,10 +775,10 @@ void recibir_comer() {
 		obtener_coordenadas();
 
 
-		cambiar_turno();
+		/*cambiar_turno();
 
 		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == posicion_elegida && fichas[i][k].molino == false && fichas[i][k].vivo == true) {
+			if (fichas[i][k].letra == posicion_elegida  && fichas[i][k].vivo == true) {
 				es_molino = false;
 				break;
 			}
@@ -792,12 +790,12 @@ void recibir_comer() {
 				comio_molino = true;
 			}
 
-		cambiar_turno();
+		cambiar_turno();*/
 
 
-	} while (verificar_espacio_libre() == true || puede_comer() == false || es_molino == true);
+	} while (verificar_espacio_libre() == true || puede_comer() == false);
 
-	posicion_comida = posicion_elegida;
+	/*posicion_comida = posicion_elegida;
 
 	if (comio_molino == true) {
 		posicion_previa = posicion_elegida;
@@ -806,1027 +804,9 @@ void recibir_comer() {
 		cambiar_turno();
 	}
 
-	posicion_elegida = posicion_comida;
+	posicion_elegida = posicion_comida;*/
 	comer();
 	jugador[i].fichas_comidas++;
-}
-
-void actualizar_molinos() {
-	for (k = 0; k < 9; k++) {
-		if (fichas[i][k].letra == posicion_previa && fichas[i][k].vivo == true) {
-			fichas[i][k].molino = false;
-			break;
-		}
-	}
-
-	switch (posicion_previa) {
-	case 'A':
-		posicion_elegida = 'B';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'B' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'C';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'C' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'D';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'D' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'G';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'G' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'J';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'J' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'V';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'V' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'B':
-		posicion_elegida = 'A';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'A' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'C';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'C' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'E';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'E' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'H';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'H' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'C':
-		posicion_elegida = 'A';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'A' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'B';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'B' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'F';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'F' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'I';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'I' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'O';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'O' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'X';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'X' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'D':
-		posicion_elegida = 'A';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'A' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'G';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'G' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'E';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'E' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'F';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'F' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'K';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'K' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'S';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'S' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'E':
-		posicion_elegida = 'B';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'B' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'H';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'H' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'D';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'D' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'F';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'F' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'F':
-		posicion_elegida = 'C';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'C' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'I';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'I' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'E';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'E' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		posicion_elegida = 'D';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'D' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'N';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'N' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'U';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'U' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'G':
-		posicion_elegida = 'A';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'A' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'D';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'D' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'H';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'H' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'I';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'I' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'L';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'L' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'P';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'P' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'H':
-		posicion_elegida = 'B';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'B' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'E';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'E' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'G';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'G' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'I';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'I' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'I':
-		posicion_elegida = 'C';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'C' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'F';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'F' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'H';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'H' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'G';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'G' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'M';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'M' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'R';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'R' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'J':
-		posicion_elegida = 'K';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'K' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'L';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'L' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'A';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'A' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'V';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'V' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'K':
-		posicion_elegida = 'J';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'J' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'L';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'L' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'S';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'S' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'D';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'D' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'L':
-		posicion_elegida = 'J';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'J' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'K';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'K' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'G';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'G' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'P';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'P' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'M':
-		posicion_elegida = 'O';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'O' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'N';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'N' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'I';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'I' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'R';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'R' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'N':
-		posicion_elegida = 'M';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'M' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'O';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'O' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'F';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'F' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'U';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'U' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'O':
-		posicion_elegida = 'M';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'M' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'N';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'N' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'C';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'C' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'X';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'X' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'P':
-		posicion_elegida = 'S';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'S' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'V';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'V' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'L';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'L' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'G';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'G' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'Q';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'Q' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'R';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'R' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'Q':
-		posicion_elegida = 'T';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'T' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'W';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'W' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'P';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'P' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'R';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'R' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'R':
-		posicion_elegida = 'U';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'U' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'X';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'X' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'Q';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'Q' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'P';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'P' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'M';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'M' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'I';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'I' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'S':
-		posicion_elegida = 'V';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'V' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'P';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'P' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'T';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'T' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'U';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'U' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'K';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'K' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'D';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'D' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'T':
-		posicion_elegida = 'Q';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'Q' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'W';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'W' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'S';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'S' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'U';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'U' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'U':
-		posicion_elegida = 'R';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'R' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'X';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'X' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'T';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'T' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'S';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'S' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'N';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'N' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'F';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'F' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'V':
-		posicion_elegida = 'S';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'S' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'P';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'P' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'W';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'W' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'X';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'X' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'J';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'J' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'A';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'A' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'W':
-		posicion_elegida = 'T';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'T' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'Q';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'Q' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'V';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'V' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'X';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'X' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-
-	case 'X':
-		posicion_elegida = 'W';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'W' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'V';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'V' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'U';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'U' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'R';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'R' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'O';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'O' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-
-		posicion_elegida = 'C';
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == 'C' && fichas[i][k].vivo == true) {
-				fichas[i][k].molino = verificar_molino();
-				break;
-			}
-		}
-		break;
-	}
 }
 
 bool verificar_molino() {
@@ -3816,7 +2796,17 @@ void actualizar_datos_fase2() {
 void recibir_jugada_fase2() {
 	hay_ficha = false;
 
-	cout << "\t\t\tTURNO: " << jugador[i].nombre << " " << jugador[i].ficha << "\t\t\tMOVIMIENTOS HECHOS: " << jugador[i].cant_mov << endl;
+	cout << "\t\t\tTURNO: " << jugador[i].nombre << " ";
+	if (jugador[i].ficha == blanco)
+		Console::ForegroundColor = ConsoleColor::Cyan;
+	else
+		Console::ForegroundColor = ConsoleColor::Yellow;
+
+	cout << jugador[i].ficha;
+
+	Console::ForegroundColor = ConsoleColor::Gray;
+
+	cout << "\t\t\tMOVIMIENTOS HECHOS: " << jugador[i].cant_mov << endl;
 
 	mostrar_vidas();
 	mostrar_dinero();
@@ -3852,7 +2842,6 @@ void recibir_jugada_fase2() {
 	jugador[i].cant_mov++;
 
 	mover();
-	actualizar_molinos();
 	actualizar_datos_fase2();
 }
 
@@ -3977,7 +2966,15 @@ void guardar_datos_fase1() {
 }
 
 void recibir_jugada_fase1() {
-	cout << "\t\t\tTURNO: " << jugador[i].nombre << " " << jugador[i].ficha << endl;
+	cout << "\t\t\tTURNO: " << jugador[i].nombre << " ";
+	if (jugador[i].ficha == blanco)
+		Console::ForegroundColor = ConsoleColor::Cyan;
+	else
+		Console::ForegroundColor = ConsoleColor::Yellow;
+
+	cout << jugador[i].ficha;
+
+	Console::ForegroundColor = ConsoleColor::Gray;
 	cout << "\t\t\tFICHAS POR PONER: " << 9 - jugador[i].fichas_puestas << endl;
 
 	mostrar_vidas();
@@ -4055,8 +3052,14 @@ void asignar_turnos() {
 		do {
 			cls;
 			cout << endl << endl << endl << endl;
-			cout << "\t\t\t\t\t\t\t1)Blanco " << blanco << endl;
-			cout << "\t\t\t\t\t\t\t2)Negro " << negro << endl;
+			cout << "\t\t\t\t\t\t\t1)Celeste ";
+			Console::ForegroundColor = ConsoleColor::Cyan;
+			cout << blanco << endl;
+			Console::ForegroundColor = ConsoleColor::Gray;
+			cout << "\t\t\t\t\t\t\t2)Amarillo ";
+			Console::ForegroundColor = ConsoleColor::Yellow;
+			cout << negro << endl;
+			Console::ForegroundColor = ConsoleColor::Gray;
 			cout << "\t\t\t\t\t\t\t" << jugador[0].nombre << " elige fichas: ";
 			cin >> jugador[0].ficha;
 		} while (jugador[0].ficha != '1' && jugador[0].ficha != '2');
@@ -4094,8 +3097,14 @@ void asignar_turnos() {
 		do {
 			cls;
 			cout << endl << endl << endl << endl;
-			cout << "\t\t\t\t\t\t\t1)Blanco " << blanco << endl;
-			cout << "\t\t\t\t\t\t\t2)Negro " << negro << endl;
+			cout << "\t\t\t\t\t\t\t1)Celeste ";
+			Console::ForegroundColor = ConsoleColor::Cyan;
+			cout << blanco << endl;
+			Console::ForegroundColor = ConsoleColor::Gray;
+			cout << "\t\t\t\t\t\t\t2)Amarillo ";
+			Console::ForegroundColor = ConsoleColor::Yellow;
+			cout << negro << endl;
+			Console::ForegroundColor = ConsoleColor::Gray;
 			cout << "\t\t\t\t\t\t\t" << jugador[1].nombre << " elige fichas: ";
 			cin >> jugador[1].ficha;
 		} while (jugador[1].ficha != '1' && jugador[1].ficha != '2');
@@ -4279,7 +3288,14 @@ void imprimir_tablero() {
 		cout << "\t\t\t\t";
 
 		for (int j = 0; j < 50; j++) {
+			if (tablero[i][j] == blanco)
+				Console::ForegroundColor = ConsoleColor::Cyan;
+			if (tablero[i][j] == negro)
+				Console::ForegroundColor = ConsoleColor::Yellow;
+
+
 			cout << tablero[i][j];
+			Console::ForegroundColor = ConsoleColor::Gray;
 		}
 
 		cout << endl;
@@ -4651,6 +3667,7 @@ void molino_banner() {
 
 	//imprimir
 	for (int i = 0; i < 20; i++) {
+		cout << "\t\t\t\t\t";
 		for (int j = 0; j < 60; j++) {
 			cout << molino[i][j];
 		}
@@ -4900,11 +3917,22 @@ void reglas_banner() {
 	reglas[5][49] = char(188);
 
 	for (int i = 0; i < 6; i++) {
+		cout << "\t\t\t\t";
 		for (int j = 0; j < 50; j++) {
 			cout << reglas[i][j];
 		}
 		cout << endl;
 	}
+
+	cout << endl;
+	cout << "-LOS JUGADORES EMPEZARAN CON 9 FICHAS" << endl;
+	cout << "-EL JUGADOR QUE EMPIEZA SE ESCOGERA DE FORMA ALEATORIA" << endl;
+	cout << "-EN LA FASE 1 NO SE PODRAN MOVER LAS FICHAS" << endl;
+	cout << "-EN LA FASE 2 LAS FICHAS SE PODRAN MOVER A CASILLEROS ADYACENTES" << endl;
+	cout << "-EN LA FASE 3, SI UN JUGADOR TIENE 3 FICHAS PODRAN MOVER SU FICHA A CUALQUIER CASILLERO LIBRE" << endl;
+	cout << "-LOS MOLINOS SE FORMAN CUANDO UN JUGADOR TIENE 3 FICHAS EN UNA LINEA HORIZONTAL, VERTICAL O DIAGONAL" << endl;
+	cout << "-NO SE PODRA COMER UNA FICHA DEL ENEMIGO SI PERTENECE A UN MOLINO, A MENOS QUE TODAS SUS FICHAS SEAN PARTE DE UNO" << endl;
+	cout << "-PIERDE EL JUGADOR QUE TENGA 2 FICHAS O NO PUEDA REALIZAR MOVIMIENTO ALGUNO" << endl;
 }
 
 void upc_banner() {
@@ -5172,11 +4200,14 @@ void upc_banner() {
 	upc[1][70] = char(219);
 
 	for (int i = 0; i < 6; i++) {
+		cout << "\t\t\t\t";
 		for (int j = 0; j < 72; j++) {
 			cout << upc[i][j];
 		}
 		cout << endl;
 	}
+
+	cout << endl;
 }
 
 void opciones_banner() {
@@ -5921,6 +4952,7 @@ void opciones_banner() {
 	opciones_3[5][73] = char(34);
 
 	for (int i = 0; i < 11; i++) {
+		cout << "\t\t\t";
 		for (int j = 0; j < 54; j++) {
 			cout << opciones_1[i][j];
 		}
@@ -5931,6 +4963,7 @@ void opciones_banner() {
 	cout << endl << endl;
 
 	for (int i = 0; i < 11; i++) {
+		cout << "\t\t\t";
 		for (int j = 0; j < 67; j++) {
 			cout << opciones_2[i][j];
 		}
@@ -5941,6 +4974,7 @@ void opciones_banner() {
 	cout << endl << endl;
 
 	for (int i = 0; i < 8; i++) {
+		cout << "\t\t\t";
 		for (int j = 0; j < 81; j++) {
 			cout << opciones_3[i][j];
 		}
@@ -5959,7 +4993,7 @@ void menu() {
 		opciones_banner();
 
 		cout << endl << endl;
-		cout << "OPCION: ";
+		cout << "\t\t\t\t\t\tOPCION: ";
 		cin >> opcion;
 
 		switch (opcion) {
