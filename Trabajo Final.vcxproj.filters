@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Hito2_00000000.cpp">
+    <ClCompile Include="JUEGO DEL MOLINO.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

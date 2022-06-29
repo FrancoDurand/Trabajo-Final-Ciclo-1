@@ -10,7 +10,7 @@
 #define A tablero[0][2]
 #define B tablero[0][25]
 #define C tablero[0][49]
-#define D tablero[4][10]
+#define D tablero[4][10] 
 #define E tablero[4][25]
 #define F tablero[4][40]
 #define G tablero[8][18]
@@ -57,9 +57,9 @@
 #define w0 char(87)
 #define x0 char(88)
 
-#define premio1 system("start https://www.baidu.com/")
-#define premio2 system("start https://www.baidu.com/")
-#define premio3 system("start https://www.baidu.com/")
+#define premio1 system("start https://youtu.be/XJcXjUB0yqY")
+#define premio2 system("start https://youtu.be/KXw8CRapg7k")
+#define premio3 system("start https://youtu.be/acdb4NjftyI")
 
 using namespace std;
 using namespace System;
@@ -80,11 +80,11 @@ typedef struct {
 	bool molino = false; //si pertenece a un molino, bloquea de ser comida
 } ficha;
 
-char opcion, posicion_elegida, posicion_previa, posicion_comida;
+char opcion, posicion_elegida, posicion_previa;
 bool hay_ficha, horizontal, vertical, diagonal;
 short x, y, i, j, k;
 ficha** fichas;
-char** tablero, ** molino, ** reglas, ** upc, ** opciones_1, ** opciones_2, ** opciones_3;
+char** tablero, ** molino, ** reglas, ** upc, ** opciones_1, ** opciones_2, ** opciones_3, ** nombre_1, ** nombre_2, ** nombre_3, ** nombre_4;;
 
 //------------------------------------------------------------------------------
 void premios();
@@ -155,6 +155,8 @@ void upc_banner();
 
 void opciones_banner();
 
+void nombres();
+
 void menu();
 
 void limpiar_memoria();
@@ -175,7 +177,7 @@ void premios() {
 
 		cout << "\t\t\t\tDINERO DE " << jugador[i].nombre << ": ";
 		Console::ForegroundColor = ConsoleColor::Green;
-		cout << jugador[i].fichas_comidas * 5 << endl;
+		cout << "$" << jugador[i].fichas_comidas * 5 << endl;
 		Console::ForegroundColor = ConsoleColor::Gray;
 		cout << "\t\t\t\tPREMIOS: " << endl;
 		cout << "\t\t\t\tA)";
@@ -197,28 +199,34 @@ void premios() {
 
 	switch (opcion) {
 	case 'A':
-		if (jugador[i].fichas_comidas * 5 >= 15)
+		if (jugador[i].fichas_comidas * 5 >= 15) {
+			jugador[i].fichas_comidas -= 3;
 			premio1;
+		}
 		else
 			premios();
 		break;
 
 	case 'B':
-		if (jugador[i].fichas_comidas * 5 >= 50)
+		if (jugador[i].fichas_comidas * 5 >= 50) {
+			jugador[i].fichas_comidas -= 10;
 			premio2;
+		}
 		else
 			premios();
 		break;
 
 	case 'C':
-		if (jugador[i].fichas_comidas * 5 >= 100)
+		if (jugador[i].fichas_comidas * 5 >= 100) {
+			jugador[i].fichas_comidas -= 20;
 			premio3;
+		}
 		else
 			premios();
 		break;
 	}
 
-	opcion = '1';
+	opcion = '1';//para terminar el bucle del menu
 }
 
 void cambiar_turno() {
@@ -231,7 +239,7 @@ void cambiar_turno() {
 void revancha() {
 	do {
 		do {
-			cls;
+			imprimir_tablero();
 			mostrar_ganador();
 
 			cout << endl << "\t\t\t\t" << char(168) << "REVANCHA? (S/N): ";
@@ -761,9 +769,6 @@ bool todas_molino() {
 }
 
 void recibir_comer() {
-	//es_molino = true;
-	//comio_molino = false;
-
 	cout << "\t\t\t" << jugador[i].nombre << " HIZO MOLINO" << endl;
 
 	do {
@@ -774,37 +779,8 @@ void recibir_comer() {
 
 		obtener_coordenadas();
 
-
-		/*cambiar_turno();
-
-		for (k = 0; k < 9; k++) {
-			if (fichas[i][k].letra == posicion_elegida  && fichas[i][k].vivo == true) {
-				es_molino = false;
-				break;
-			}
-		}
-
-		if (es_molino == true)
-			if (todas_molino() == true) {
-				es_molino = false;
-				comio_molino = true;
-			}
-
-		cambiar_turno();*/
-
-
 	} while (verificar_espacio_libre() == true || puede_comer() == false);
 
-	/*posicion_comida = posicion_elegida;
-
-	if (comio_molino == true) {
-		posicion_previa = posicion_elegida;
-		cambiar_turno();
-		actualizar_molinos();
-		cambiar_turno();
-	}
-
-	posicion_elegida = posicion_comida;*/
 	comer();
 	jugador[i].fichas_comidas++;
 }
@@ -4983,6 +4959,774 @@ void opciones_banner() {
 	}
 }
 
+void nombres() {
+	nombre_1 = new char* [3];
+
+	for (int i = 0; i < 3; i++)
+		nombre_1[i] = new char[105];
+
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 105; j++)
+			nombre_1[i][j] = char(32);
+
+	nombre_2 = new char* [3];
+
+	for (int i = 0; i < 3; i++)
+		nombre_2[i] = new char[96];
+
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 96; j++)
+			nombre_2[i][j] = char(32);
+
+	nombre_3 = new char* [3];
+
+	for (int i = 0; i < 3; i++) {
+		nombre_3[i] = new char[93];
+	}
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 93; j++) {
+			nombre_3[i][j] = char(32);
+		}
+	}
+
+
+	nombre_4 = new char* [3];
+	for (int i = 0; i < 3; i++)
+		nombre_4[i] = new char[97];
+
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 97; j++)
+			nombre_4[i][j] = char(32);
+
+	//Gianfranco
+	//-
+	nombre_1[1][0] = char(95);
+	nombre_1[1][1] = char(95);
+
+	//G
+	for (int i = 0; i <= 2; i++) {
+		nombre_1[i][5] = char(95);
+	}
+	nombre_1[1][3] = char(47);
+	nombre_1[2][3] = char(92);
+	nombre_1[0][4] = char(95);
+	nombre_1[2][4] = char(95);
+	nombre_1[1][6] = char(96);
+	nombre_1[2][6] = char(62);
+
+	//I
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][8] = char(124);
+	}
+
+	//A
+	nombre_1[1][11] = char(47);
+	nombre_1[2][10] = char(47);
+	nombre_1[2][11] = char(126);
+	nombre_1[2][12] = char(126);
+	nombre_1[1][12] = char(92);
+	nombre_1[2][13] = char(92);
+
+	//N
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][15] = char(124);
+	}
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][18] = char(124);
+	}
+	nombre_1[1][16] = char(92);
+	nombre_1[2][17] = char(92);
+
+	//F
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][20] = char(124);
+	}
+
+	for (int j = 21; j <= 23; j++) {
+		nombre_1[0][j] = char(95);
+	}
+
+	for (int j = 21; j <= 22; j++) {
+		nombre_1[1][j] = char(95);
+	}
+	//R
+	for (int i = 0; i <= 1; i++) {
+		nombre_1[i][26] = char(95);
+		nombre_1[i][27] = char(95);
+	}
+
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][25] = char(124);
+	}
+
+	nombre_1[1][28] = char(41);
+	nombre_1[2][28] = char(92);
+
+	//A
+	nombre_1[1][31] = char(47);
+	nombre_1[2][30] = char(47);
+	nombre_1[2][31] = char(126);
+	nombre_1[2][32] = char(126);
+	nombre_1[1][32] = char(92);
+	nombre_1[2][33] = char(92);
+
+	//N
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][35] = char(124);
+	}
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][38] = char(124);
+	}
+	nombre_1[1][36] = char(92);
+	nombre_1[2][37] = char(92);
+
+	//C
+	for (int j = 41; j <= 42; j++) {
+		nombre_1[0][j] = char(95);
+	}
+
+	for (int j = 41; j <= 42; j++) {
+		nombre_1[2][j] = char(95);
+	}
+
+	nombre_1[1][40] = char(47);
+	nombre_1[2][40] = char(92);
+	nombre_1[1][43] = char(96);
+	nombre_1[2][43] = char(44);
+
+	//O
+	for (int j = 46; j <= 47; j++) {
+		nombre_1[0][j] = char(95);
+	}
+
+	for (int j = 46; j <= 47; j++) {
+		nombre_1[2][j] = char(95);
+	}
+
+	nombre_1[1][45] = char(47);
+	nombre_1[2][45] = char(92);
+	nombre_1[2][48] = char(47);
+	nombre_1[1][48] = char(92);
+
+	//D
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][53] = char(124);
+	}
+
+	for (int j = 54; j <= 55; j++) {
+		nombre_1[0][j] = char(95);
+	}
+
+	for (int j = 54; j <= 55; j++) {
+		nombre_1[2][j] = char(95);
+	}
+	nombre_1[1][56] = char(92);
+	nombre_1[2][56] = char(47);
+
+	//U
+	for (int j = 59; j <= 60; j++) {
+		nombre_1[2][j] = char(95);
+	}
+	nombre_1[1][58] = char(124);
+	nombre_1[1][61] = char(124);
+	nombre_1[2][58] = char(92);
+	nombre_1[2][61] = char(47);
+
+	//R
+	for (int i = 0; i <= 1; i++) {
+		nombre_1[i][64] = char(95);
+		nombre_1[i][65] = char(95);
+	}
+
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][63] = char(124);
+	}
+
+	nombre_1[1][66] = char(41);
+	nombre_1[2][66] = char(92);
+
+	//A
+	nombre_1[1][69] = char(47);
+	nombre_1[2][68] = char(47);
+	nombre_1[2][69] = char(126);
+	nombre_1[2][70] = char(126);
+	nombre_1[1][70] = char(92);
+	nombre_1[2][71] = char(92);
+
+	//N
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][73] = char(124);
+	}
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][76] = char(124);
+	}
+	nombre_1[1][74] = char(92);
+	nombre_1[2][75] = char(92);
+
+	//D
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][78] = char(124);
+	}
+
+	for (int j = 79; j <= 80; j++) {
+		nombre_1[0][j] = char(95);
+	}
+
+	for (int j = 79; j <= 80; j++) {
+		nombre_1[2][j] = char(95);
+	}
+	nombre_1[1][81] = char(92);
+	nombre_1[2][81] = char(47);
+
+	//V
+	nombre_1[1][86] = char(92);
+	nombre_1[2][87] = char(92);
+	nombre_1[2][88] = char(47);
+	nombre_1[1][89] = char(47);
+
+	//E
+	for (int i = 0; i <= 2; i++) {
+		nombre_1[i][92] = char(95);
+		nombre_1[i][93] = char(95);
+	}
+	nombre_1[0][94] = char(95);
+	nombre_1[2][94] = char(95);
+	nombre_1[1][91] = char(124);
+	nombre_1[2][91] = char(124);
+
+	//R
+	for (int i = 0; i <= 1; i++) {
+		nombre_1[i][97] = char(95);
+		nombre_1[i][98] = char(95);
+	}
+
+	for (int i = 1; i <= 2; i++) {
+		nombre_1[i][96] = char(124);
+	}
+
+	nombre_1[1][99] = char(41);
+	nombre_1[2][99] = char(92);
+	//A
+	nombre_1[1][102] = char(47);
+	nombre_1[2][101] = char(47);
+	nombre_1[2][102] = char(126);
+	nombre_1[2][103] = char(126);
+	nombre_1[1][103] = char(92);
+	nombre_1[2][104] = char(92);
+
+	//brisa
+	//-
+	nombre_2[1][0] = char(95);
+	nombre_2[1][1] = char(95);
+
+	//B
+	for (int i = 0; i <= 2; i++) {
+		nombre_2[i][4] = char(95);
+		nombre_2[i][5] = char(95);
+	}
+	nombre_2[1][3] = char(124);
+	nombre_2[2][3] = char(124);
+	nombre_2[1][6] = char(41);
+	nombre_2[2][6] = char(41);
+
+	//R
+	for (int i = 0; i <= 1; i++) {
+		nombre_2[i][9] = char(95);
+		nombre_2[i][10] = char(95);
+	}
+
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][8] = char(124);
+	}
+
+	nombre_2[1][11] = char(41);
+	nombre_2[2][11] = char(92);
+
+	//I
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][13] = char(124);
+	}
+
+	//S
+	for (int i = 0; i <= 2; i++) {
+		nombre_2[i][16] = char(95);
+		nombre_2[i][17] = char(95);
+	}
+	nombre_2[1][15] = char(47);
+	nombre_2[2][15] = char(46);
+	nombre_2[1][18] = char(96);
+	nombre_2[2][18] = char(47);
+
+	//A
+	nombre_2[1][21] = char(47);
+	nombre_2[2][20] = char(47);
+	nombre_2[2][21] = char(126);
+	nombre_2[2][22] = char(126);
+	nombre_2[1][22] = char(92);
+	nombre_2[2][23] = char(92);
+
+	//F
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][28] = char(124);
+	}
+
+	for (int j = 29; j <= 31; j++) {
+		nombre_2[0][j] = char(95);
+	}
+
+	for (int j = 29; j <= 30; j++) {
+		nombre_2[1][j] = char(95);
+	}
+
+	//L
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][33] = char(124);
+	}
+	for (int j = 34; j <= 36; j++) {
+		nombre_2[2][j] = char(95);
+	}
+	// O
+	for (int j = 39; j <= 40; j++) {
+		nombre_2[0][j] = char(95);
+	}
+
+	for (int j = 39; j <= 40; j++) {
+		nombre_2[2][j] = char(95);
+	}
+
+	nombre_2[1][38] = char(47);
+	nombre_2[2][38] = char(92);
+	nombre_2[2][41] = char(47);
+	nombre_2[1][41] = char(92);
+
+	//R
+
+	for (int i = 0; i <= 1; i++) {
+		nombre_2[i][44] = char(95);
+		nombre_2[i][45] = char(95);
+	}
+
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][43] = char(124);
+	}
+
+	nombre_2[1][46] = char(41);
+	nombre_2[2][46] = char(92);
+
+	//E
+
+	for (int i = 0; i <= 2; i++) {
+		nombre_2[i][49] = char(95);
+		nombre_2[i][50] = char(95);
+	}
+	nombre_2[0][51] = char(95);
+	nombre_2[2][51] = char(95);
+	nombre_2[1][48] = char(124);
+	nombre_2[2][48] = char(124);
+
+
+	//S
+	for (int i = 0; i <= 2; i++) {
+		nombre_2[i][54] = char(95);
+		nombre_2[i][55] = char(95);
+	}
+	nombre_2[1][53] = char(47);
+	nombre_2[2][53] = char(46);
+	nombre_2[1][56] = char(96);
+	nombre_2[2][56] = char(47);
+
+	// C
+	for (int j = 62; j <= 63; j++) {
+		nombre_2[0][j] = char(95);
+	}
+
+	for (int j = 62; j <= 63; j++) {
+		nombre_2[2][j] = char(95);
+	}
+
+	nombre_2[1][61] = char(47);
+	nombre_2[2][61] = char(92);
+	nombre_2[1][64] = char(96);
+	nombre_2[2][64] = char(44);
+
+	//A 
+	nombre_2[1][67] = char(47);
+	nombre_2[2][66] = char(47);
+	nombre_2[2][67] = char(126);
+	nombre_2[2][68] = char(126);
+	nombre_2[1][68] = char(92);
+	nombre_2[2][69] = char(92);
+
+	//S
+	for (int i = 0; i <= 2; i++) {
+		nombre_2[i][72] = char(95);
+		nombre_2[i][73] = char(95);
+	}
+	nombre_2[1][71] = char(47);
+	nombre_2[2][71] = char(46);
+	nombre_2[1][74] = char(96);
+	nombre_2[2][74] = char(47);
+
+	//T
+
+	for (int j = 76; j <= 78; j++) {
+		nombre_2[0][j] = char(95);
+	}
+	nombre_2[1][77] = char(124);
+	nombre_2[2][77] = char(124);
+
+	//I
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][80] = char(124);
+	}
+
+	//L
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][82] = char(124);
+	}
+
+	for (int j = 83; j <= 85; j++) {
+		nombre_2[2][j] = char(95);
+	}
+
+	for (int i = 1; i <= 2; i++) {
+		nombre_2[i][87] = char(124);
+	}
+	for (int j = 88; j <= 90; j++) {
+		nombre_2[2][j] = char(95);
+	}
+
+	//O
+	for (int j = 93; j <= 94; j++) {
+		nombre_2[0][j] = char(95);
+	}
+
+	for (int j = 93; j <= 94; j++) {
+		nombre_2[2][j] = char(95);
+	}
+
+	nombre_2[1][92] = char(47);
+	nombre_2[2][92] = char(92);
+	nombre_2[2][95] = char(47);
+	nombre_2[1][95] = char(92);
+
+	for (int j = 0; j <= 1; j++) {
+		nombre_3[1][j] = char(95);
+	}
+	nombre_3[1][3] = char(92);
+	nombre_3[2][4] = char(124);
+	nombre_3[1][5] = char(47);
+	for (int j = 8; j <= 9; j++) {
+		nombre_3[2][j] = char(126);
+	}
+	nombre_3[1][8] = char(47);
+	nombre_3[2][7] = char(47);
+	nombre_3[1][9] = char(92);
+	nombre_3[2][10] = char(92);
+	for (int i = 1; i <= 2; i++) {
+		nombre_3[i][13] = char(124);
+		nombre_3[i][16] = char(124);
+		nombre_3[i][18] = char(124);
+		nombre_3[i][20] = char(124);
+	}
+	for (int j = 21; j <= 23; j++) {
+		nombre_3[2][j] = char(95);
+	}
+	nombre_3[1][14] = char(92);
+	nombre_3[1][15] = char(47);
+	for (int i = 1; i <= 2; i++) {
+		nombre_3[i][25] = char(124);
+	}
+	for (int j = 26; j <= 27; j++) {
+		nombre_3[0][j] = char(95);
+		nombre_3[1][j] = char(95);
+		nombre_3[2][j] = char(95);
+	}
+	nombre_3[0][28] = char(95);
+	nombre_3[2][28] = char(95);
+	for (int i = 1; i <= 2; i++) {
+		nombre_3[i][31] = char(124);
+	}
+	for (int j = 30; j <= 32; j++) {
+		nombre_3[0][j] = char(95);
+	}
+	for (int i = 1; i <= 2; i++) {
+		nombre_3[i][37] = char(124);
+		nombre_3[i][34] = char(124);
+	}
+	for (int j = 35; j <= 36; j++) {
+		nombre_3[1][j] = char(95);
+	}
+	for (int j = 43; j <= 44; j++) {
+		nombre_3[2][j] = char(95);
+	}
+	nombre_3[2][42] = char(92);
+	nombre_3[2][45] = char(47);
+	nombre_3[1][45] = char(124);
+	for (int j = 48; j <= 49; j++) {
+		nombre_3[2][j] = char(126);
+	}
+	nombre_3[2][47] = char(47);
+	nombre_3[1][48] = char(47);
+	nombre_3[1][49] = char(92);
+	nombre_3[2][50] = char(92);
+	for (int j = 57; j <= 58; j++) {
+		nombre_3[0][j] = char(95);
+		nombre_3[2][j] = char(95);
+	}
+	nombre_3[1][52] = char(92);
+	nombre_3[2][56] = char(92);
+	nombre_3[1][59] = char(92);
+	nombre_3[2][53] = char(124);
+	nombre_3[1][54] = char(47);
+	nombre_3[1][56] = char(47);
+	nombre_3[2][59] = char(47);
+	for (int i = 0; i <= 2; i++) {
+		nombre_3[i][65] = char(95);
+		nombre_3[i][66] = char(95);
+	}
+	for (int j = 70; j <= 71; j++) {
+		nombre_3[0][j] = char(95);
+		nombre_3[2][j] = char(95);
+	}
+	nombre_3[1][64] = char(47);
+	nombre_3[2][67] = char(47);
+	nombre_3[2][64] = char(46);
+	nombre_3[1][67] = char(96);
+	nombre_3[1][69] = char(47);
+	nombre_3[2][72] = char(47);
+	nombre_3[2][69] = char(92);
+	nombre_3[1][72] = char(92);
+	for (int i = 1; i <= 2; i++) {
+		nombre_3[i][74] = char(124);
+		nombre_3[i][79] = char(124);
+		nombre_3[i][84] = char(124);
+		nombre_3[i][89] = char(124);
+	}
+	for (int j = 75; j <= 77; j++) {
+		nombre_3[2][j] = char(95);
+	}
+	for (int j = 80; j <= 82; j++) {
+		nombre_3[2][j] = char(95);
+	}
+	for (int j = 85; j <= 87; j++) {
+		nombre_3[2][j] = char(95);
+		nombre_3[0][j] = char(95);
+	}
+	for (int j = 90; j <= 91; j++) {
+		nombre_3[1][j] = char(95);
+		nombre_3[0][j] = char(95);
+	}
+	nombre_3[1][85] = char(95);
+	nombre_3[1][86] = char(95);
+	nombre_3[1][92] = char(41);
+	nombre_3[2][92] = char(92);
+
+	nombre_4[1][0] = char(95);
+	nombre_4[1][1] = char(95);
+
+	//G
+	for (int i = 0; i <= 2; i++) {
+		nombre_4[i][5] = char(95);
+	}
+	nombre_4[1][3] = char(47);
+	nombre_4[2][3] = char(92);
+	nombre_4[0][4] = char(95);
+	nombre_4[2][4] = char(95);
+	nombre_4[1][6] = char(96);
+	nombre_4[2][6] = char(62);
+
+	//U
+	nombre_4[1][8] = char(124);
+	nombre_4[1][11] = char(124);
+	nombre_4[2][8] = char(92);
+	nombre_4[2][9] = char(95);
+	nombre_4[2][10] = char(95);
+	nombre_4[2][11] = char(47);
+	//S
+
+	nombre_4[0][14] = char(95);
+	nombre_4[0][15] = char(95);
+	nombre_4[1][13] = char(47);
+	nombre_4[1][14] = char(95);
+	nombre_4[1][15] = char(95);
+	nombre_4[1][16] = char(96);
+	nombre_4[2][13] = char(46);
+	nombre_4[2][14] = char(95);
+	nombre_4[2][15] = char(95);
+	nombre_4[2][16] = char(47);
+
+	//T
+	nombre_4[0][18] = char(95);
+	nombre_4[0][19] = char(95);
+	nombre_4[0][20] = char(95);
+	nombre_4[1][19] = char(124);
+	nombre_4[2][19] = char(124);
+
+
+	//A
+	nombre_4[1][23] = char(47);
+	nombre_4[1][24] = char(92);
+	nombre_4[2][22] = char(47);
+	nombre_4[2][23] = char(126);
+	nombre_4[2][24] = char(126);
+	nombre_4[2][25] = char(92);
+
+	//V
+	nombre_4[1][27] = char(92);
+	nombre_4[1][30] = char(47);
+	nombre_4[2][28] = char(92);
+	nombre_4[2][29] = char(47);
+
+	//O
+	nombre_4[0][41] = char(95);
+	nombre_4[0][34] = char(95);
+	nombre_4[1][32] = char(47);
+	nombre_4[1][35] = char(92);
+	nombre_4[2][32] = char(92);
+	nombre_4[2][33] = char(95);
+	nombre_4[2][34] = char(95);
+	nombre_4[2][35] = char(47);
+
+	//P
+	nombre_4[0][41] = char(95);
+	nombre_4[0][42] = char(95);
+	nombre_4[1][40] = char(124);
+	nombre_4[1][41] = char(95);
+	nombre_4[1][42] = char(95);
+	nombre_4[1][43] = char(41);
+	nombre_4[2][40] = char(124);
+
+	//O
+
+	nombre_4[0][46] = char(95);
+	nombre_4[0][47] = char(95);
+	nombre_4[1][45] = char(47);
+	nombre_4[1][48] = char(92);
+	nombre_4[2][45] = char(92);
+	nombre_4[2][46] = char(95);
+	nombre_4[2][47] = char(95);
+	nombre_4[2][48] = char(47);
+
+	//M
+	nombre_4[1][50] = char(124);
+	nombre_4[1][51] = char(92);
+	nombre_4[1][52] = char(47);
+	nombre_4[1][53] = char(124);
+	nombre_4[2][50] = char(124);
+	nombre_4[2][53] = char(124);
+
+	//A
+	nombre_4[1][56] = char(47);
+	nombre_4[1][57] = char(92);
+	nombre_4[2][55] = char(47);
+	nombre_4[2][56] = char(126);
+	nombre_4[2][57] = char(126);
+	nombre_4[2][58] = char(92);
+
+	//E
+	nombre_4[0][64] = char(95);
+	nombre_4[0][65] = char(95);
+	nombre_4[0][66] = char(95);
+	nombre_4[1][63] = char(124);
+	nombre_4[1][64] = char(95);
+	nombre_4[1][65] = char(95);
+	nombre_4[2][63] = char(124);
+	nombre_4[2][64] = char(95);
+	nombre_4[2][65] = char(95);
+	nombre_4[2][66] = char(95);
+	//s
+	nombre_4[0][69] = char(95);
+	nombre_4[0][70] = char(95);
+	nombre_4[1][68] = char(47);
+	nombre_4[1][69] = char(95);
+	nombre_4[1][70] = char(95);
+	nombre_4[1][71] = char(96);
+	nombre_4[2][68] = char(46);
+	nombre_4[2][69] = char(95);
+	nombre_4[2][70] = char(95);
+	nombre_4[2][71] = char(47);
+	//p
+	for (int i = 1; i <= 2; i++) {
+		nombre_4[i][73] = char(124);
+	}
+
+	for (int i = 0; i <= 1; i++) {
+		nombre_4[i][74] = char(95);
+		nombre_4[i][75] = char(95);
+	}
+	nombre_4[1][76] = char(41);
+
+	//I
+	for (int i = 1; i <= 2; i++) {
+		nombre_4[i][78] = char(124);
+	}
+	//N
+	for (int i = 1; i <= 2; i++) {
+		nombre_4[i][80] = char(124);
+		nombre_4[i][83] = char(124);
+	}
+	nombre_4[1][81] = char(92);
+	nombre_4[2][82] = char(92);
+
+	//O
+	for (int j = 86; j <= 87; j++) {
+		nombre_4[0][j] = char(95);
+		nombre_4[2][j] = char(95);
+	}
+	nombre_4[1][88] = char(92);
+	nombre_4[2][85] = char(92);
+	nombre_4[1][85] = char(47);
+	nombre_4[2][88] = char(47);
+	//Z
+	nombre_4[0][90] = char(95);
+	nombre_4[0][91] = char(95);
+	nombre_4[1][91] = char(47);
+	nombre_4[2][90] = char(47);
+	nombre_4[2][91] = char(95);
+	//A
+
+	nombre_4[1][94] = char(47);
+	nombre_4[1][95] = char(92);
+	nombre_4[2][93] = char(47);
+	nombre_4[2][94] = char(126);
+	nombre_4[2][95] = char(126);
+	nombre_4[2][96] = char(92);
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 105; j++) {
+			cout << nombre_1[i][j];
+		}
+		cout << endl;
+	}
+
+	cout << endl << endl;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 96; j++) {
+			cout << nombre_2[i][j];
+		}
+
+		cout << endl;
+	}
+
+	cout << endl << endl;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 93; j++) {
+			cout << nombre_3[i][j];
+		}
+		cout << endl;
+	}
+
+	cout << endl << endl;
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 97; j++) {
+			cout << nombre_4[i][j];
+		}
+		cout << endl;
+	}
+}
+
 void menu() {
 	do {
 		cls;
@@ -5016,6 +5760,7 @@ void menu() {
 			cls;
 
 			upc_banner();
+			nombres();
 
 			_getch();
 
@@ -5066,4 +5811,24 @@ void limpiar_memoria() {
 		delete[] fichas[i];
 
 	delete[] fichas;
+
+	for (int i = 0; i < 3; i++)
+		delete[] nombre_1[i];
+
+	delete[] nombre_1;
+
+	for (int i = 0; i < 3; i++)
+		delete[] nombre_2[i];
+
+	delete[] nombre_2;
+
+	for (int i = 0; i < 3; i++)
+		delete[] nombre_3[i];
+
+	delete[] nombre_3;
+
+	for (int i = 0; i < 3; i++)
+		delete[] nombre_4[i];
+
+	delete[] nombre_4;
 }
