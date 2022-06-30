@@ -1,0 +1,189 @@
+MACROS:
+-LETRAS MAYUSCULAS:
+	Referencias al elemento en la matriz del tablero.
+	Ejemplo: A -> tablero[0][2]
+
+-LETRAS MINUSCULAS:
+	Códigos en ASCII de la letra en mayúscula.
+	Ejemplo: a0 -> char(65) -> "A"
+
+-blanco/negro:
+	Códigos en ASCII de las fichas.
+
+-cls, premio1/2/3:
+	Comandos.
+	Ejemplo: cls -> system("cls) / premio1 -> system("start https://youtu.be/XJcXjUB0yqY")
+
+VARIABLES GLOBALES:
+-char: opcion, posicion_elegida, posicion_previa
+-bool: hay_ficha, horizontal, vertical, diagonal
+-short: x, y, i, j, k
+
+STRUCTS:
+-jugador: vector de dos elementos, cada uno tiene la siguiente estructura:
+	string nombre (NOMBRE DEL JUGADOR)
+	char ficha (SIMBOLO DE LA FICHA)
+	short cant_fichas = 9 (FICHAS EN JUEGO/VIDAS)
+	short cant_mov = 0 (MOVIMIENTOS REALIZADOS)
+	short fichas_puestas = 0 (FICHAS COLOCADAS EN LA FASE 1)
+	bool fase3 = false (POSEE 3 FICHAS?)
+	short fichas_comidas = 0 (VECES QUE DESCONTO FICHA AL CONTRINCANTE * 5 = DINERO)
+
+	INDICE: i = 0 SE REFIERE AL JUGADOR 1 / i = 1 SE REFIERE AL JUGADOR 2
+
+-fichas: matriz 2x9, cada elemento tiene la siguiente estructura:
+	char letra (POSICION EN EL TABLERO)
+	bool vivo = false (SE ENCUENTRA EN JUEGO?)
+	bool molino = false (ES PARTE DE UN MOLINO?)
+
+	INDICE: j/k SE REFIERE AL NUMERO DE FICHA
+
+FUNCIONES:
+-cambiar_turno: aumenta en 1 el indice i, si es >=2 vuelve a 0.
+
+-obtener_coordenadas: según posicion_elegida cambia los valores de x/y para ubicarlo en la matriz tablero.
+
+-verificar_espacio_libre: según los valores de x/y, verifica si el espacio esta ocupado por alguna ficha (tablero[x][y] != jugador[0].ficha/jugador[1].ficha)
+
+-jugar: agrupa las funciones necesarias para dar inicio a una partida (datos_jugadores, setear_tablero, imprimir_tablero, fase1, fase2, cambiar_turno, revancha).
+
+-datos_jugadores: guarda los nombres de cada jugador, crea la matriz de fichas y asigna turnos.
+
+-asignar_turnos: se genera un numero aleatorio entre 0 y 1, si es par (0) empieza el jugador 1 (i = 0), caso contrario empieza el jugador 2 (i = 1). El jugador que comienza elige la ficha, por ende, la no escogida se le asigna al otro jugador.
+
+-setear_tablero: crea la matriz del tablero, rellena los elementos según corresponda a su estado por defecto.
+
+-imprimir_tablero: muestra por pantalla el estado actualizado del tablero.
+
+-fase1: bucle for con indice j = 0, recibe la jugada, aumenta el contador de fichas puestas, actualiza el tablero, verifica existencia de molino. Se ejecuta mientras ambos jugadores no hayan colocado las 9 fichas. Cada ejecucion aumenta en 1 a j (j++).
+
+-recibir_jugada_fase1: recibe la posición donde se quiere colocar la ficha (posicion_elegida), se obtienen coordenadas y se verifica que el espacio esté libre. Tras la verificación se guardan los datos en la matriz fichas.
+
+-guardar_datos_fase1: se guarda la posicion_elegida en cada ficha, se activa la ficha (vivo = true), además se pinta en el tablero la ficha según la posicion_elegida.
+	
+	fichas[i][j].letra = posicion_elegida
+	fichas[i][j].vivo = true
+	switch(posicion_elegida): 'A'-> A = jugador[i].ficha
+
+-recibir_jugada_fase1: recibe la posicion donde se quiere colocar la ficha (posicion_elegida), se obtienen coordenadas y se verifica que el espacio este libre. Tras la verificacion se guardan los datos en la matriz fichas.
+
+-guardar_datos_fase1: se guarda la posicion_elegida en cada ficha, se activa la ficha (vivo = true), además se pinta en el tablero la ficha segun la posicion_elegida.
+
+	fichas[i][j].letra = posicion_elegida
+	fichas[i][j].vivo = true
+	switch(posicion_elegida): 'A'-> A = jugador[i].ficha
+
+-fase2: bucle while, se recibe la jugada, se actualiza el tablero y se verifica la existencia de molino. Tras cada jugada se cambia de turno y se verifica si al jugador que le toca está en la fase 3.
+
+-recibir_jugada_fase2: setea hay_ficha = false, recibe la ficha que se desea mover (posicion_elegida: tambien se guarda en posicion_previa), se valida buscando en la matriz fichas (.letra == posicion_elegida y .vivo == true). Si se encontró el elemento se cambia hay_ficha = true. Adicionalmente se valida si esa ficha se puede mover: si el jugador esta en al fase 2 debe tener una posicion aledaña libre (puede_mover), si esta en la fase 3 no es necesario. Se recibe el lugar a mover (posicion_elegida), se obtienen coordenadas y se valida: el espacio debe estar libre y el lugar a mover debe ser aledaño a posicion_previa, si el jugador esta en la fase 3 solo es necesario el espacio libre. Se aumenta el contador de movimientos del jugador, se realiza el movimiento en el tablero (mover) y se actualizan los datos en la matriz fichas (actualizar_datos_fase2).
+
+	hay_ficha = false
+	DO WHILE (hay_ficha == false || (puede_mover() == false && jugador[i].fase3 == false)):
+	"FICHA A MOVER" -> posicion_elegida -> posicion_previa
+	for (j = 0; j < 9; j++)
+		if (fichas[i][j].letra == posicion_elegida && fichas[i][j].vivo == true)
+			hay_ficha = true;
+			break;
+
+	DO WHILE (verificar_espacio_libre() == false || (puede_recibir() == false && jugador[i].fase3 == false)):
+	"LUGAR A MOVER" -> posicion_elegida
+	obtener_coordenadas
+
+	jugador[i].cant_mov++
+	mover()
+	actualizar_datos_fase2()
+
+
+-mover: se obtienen las coordenadas de posicion_elegida y se pone el simbolo segun corresponda x/y. Además se restaura posicion_previa a su estado original.
+
+	obtener_coordenadas()
+	tablero[x][y] = jugador[i].ficha
+	switch(posicion_previa): 'A' -> A = a0
+
+-actualizar_datos_fase2: se cambia el atributo de letra, del elemento correspondiente en la matriz, a posicion_elegida.
+
+	fichas[i][j].letra = posicion_elegida
+
+-verificar_molino: setea horizontal, vertical y diagonal = false, se evalua si con el último movimiento (posicion_elegida) se formó un molino. En caso de que se haya formado un molino a las fichas que lo conforman se les cambia el atributo .molino = true.
+
+	horizontal = false, vertical = false, diagonal = false
+	switch(posicion_elegida): 'A'-> EVALUACION DE MOLINOS
+	
+	SI SE FORMA UNO HORIZONTAL (A-B-C):
+	horizontal = true
+	fichas[i][j].molino = true
+	bucle for indice k = 0 (se utiliza k para no afectar en la secuencia de la fase 1) para buscar en la matriz fichas a ambas fichas (.letra == B-C/.vivo == true)
+	
+	if (horizontal == true || vertical == true || diagonal == true)
+		return true
+	else
+		return false
+
+-recibir_comer: tras la formación de un molino se recibe la jugada para comer una ficha del contrincante, se recibe la ficha a comer (posicion_elegida), se obtienen coordenadas para verificar que el espacio este ocupado, además la ficha debe ser diferente a la del mismo jugador (puede_comer). Se realiza el descuento al jugador enemigo y se restaura la posicion del tablero a la original (comer), se aumenta el contador de fichas comidas al jugador que formo el molino.
+
+	DO WHILE: (verificar_espacio_libre() == true || puede_comer() == false)
+	"FICHA A COMER" -> posicion_elegida
+	obtener_coordenadas()
+
+	comer()
+	jugador[i].fichas_comidas++
+
+-puede_comer: se evalua si la posicion_elegida contiene una ficha del mismo jugador
+	
+	switch(posicion_elegida): 'A'
+	if A != jugador
+		return true
+	else
+		return false
+
+-comer: se descuenta cambia el atributo .vivo = false de la ficha que se comio, se descuenta al contador de cantidad de fichas del jugador enemigo, se reestablece la casilla a su estado original
+
+	cambiar_turno() //se cambia de turno para poder buscar en la fila del jugador enemigo
+	for (k = 0; k < 9; k++) 
+		if (fichas[i][k].letra == posicion_elegida && fichas[i][k].vivo == true) 
+			fichas[i][k].vivo = false;
+			break;
+	jugador[i].cant_fichas--
+	cambiar_turno() //se restaura el cambio de turno para no afectar la secuencia de estos
+
+	switch(posicion_elegida): 'A' -> A = a0
+
+-verificar_fase3: evalua la cantidad de fichas de un jugador, en caso tenga 3 o menos se cambia su atributo .fase3 = true
+
+	if (jugador[i].fase3 == false)
+		if (jugador[i].cant_fichas <= 3)
+			jugador[i].fase3 = true
+
+-verificar_imposibilidad_movimiento: se evalua si todas las fichas en juego pueden moverse a casilleros aledaños (el jugador sigue en la fase 2)
+
+	for (j = 0; j < 9; j++)
+		if (fichas[i][j].vivo == true)
+			posicion_elegida = fichas[i][j].letra;
+			if (puede_mover() == true)
+				return false //basta que una ficha se pueda mover
+	return true //por defecto regresa true, si una ficha se puede mover regresa false
+
+-verificar_ganador: evalua si el jugador del turno tiene 2 fichas (jugador[i].cant_fichas <= 2), en caso tenga más se evalua si esta en la fase 2 (jugador[i].fase3 == false) para verificar si no se puede mover (verificar_imposibilidad_movimiento)
+
+	if (jugador[i].cant_fichas <= 2)
+		return true //si tiene 2 fichas hay perdedor
+	else if (jugador[i].fase3 == false)
+		if (verificar_imposibilidad_movimiento() == true)
+			return true //si no se puede realizar movimiento alguno hay perdedor
+
+	return false //si no hay ganador por defecto regresa false
+
+-mostrar_ganador: tras terminar la fase 2 se cambia de turno para obtener el nombre del jugador ganador, simplemente se muestra por pantalla un mensaje anunciando al ganador.
+
+	jugador[i].nombre " GANO" 
+
+-revancha: reestablece los contadores de los jugadores a sus estados por defecto, menos el contador de fichas_comidas, en la matriz fichas se setea todos los elementos por defecto. Se da la opción de una revancha, en caso se realice una revancha se vuelve definir que jugador empieza (asignar_turnos), caso contrario, el último jugador que ganó canjeara su dinero por premios
+
+-premios: se muestra la cantidad de dinero del jugador ganador, se le dan 3 premios a elegir con diferentes precios, se verifica que tenga la cantidad necesaria
+
+	"PREMIO A, B, C" -> opcion
+	switch(opcion): 'A' -> se evalua si tiene la cantidad necesaria
+
+-mostrar_vidas: muestra corazones como tantas fichas tenga en juego un jugador
+
+-mostrar_dinero: muestra la cantidad de dinero acumulado, la cantidad de fichas comidas * 5
