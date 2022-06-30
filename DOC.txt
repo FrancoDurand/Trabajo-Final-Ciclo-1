@@ -75,7 +75,7 @@ FUNCIONES:
 
 -fase2: bucle while, se recibe la jugada, se actualiza el tablero y se verifica la existencia de molino. Tras cada jugada se cambia de turno y se verifica si al jugador que le toca está en la fase 3.
 
--recibir_jugada_fase2: setea hay_ficha = false, recibe la ficha que se desea mover (posicion_elegida: tambien se guarda en posicion_previa), se valida buscando en la matriz fichas (.letra == posicion_elegida y .vivo == true). Si se encontró el elemento se cambia hay_ficha = true. Adicionalmente se valida si esa ficha se puede mover: si el jugador esta en al fase 2 debe tener una posicion aledaña libre (puede_mover), si esta en la fase 3 no es necesario. Se recibe el lugar a mover (posicion_elegida), se obtienen coordenadas y se valida: el espacio debe estar libre y el lugar a mover debe ser aledaño a posicion_previa, si el jugador esta en la fase 3 solo es necesario el espacio libre. Se aumenta el contador de movimientos del jugador, se realiza el movimiento en el tablero (mover) y se actualizan los datos en la matriz fichas (actualizar_datos_fase2).
+-recibir_jugada_fase2: setea hay_ficha = false, recibe la ficha que se desea mover (posicion_elegida: tambien se guarda en posicion_previa), se valida buscando en la matriz fichas (.letra == posicion_elegida y .vivo == true). Si se encontró el elemento se cambia hay_ficha = true. Adicionalmente se valida si esa ficha se puede mover: si el jugador esta en al fase 2 debe tener una posicion aledaña libre (puede_mover), si esta en la fase 3 no es necesario. Se recibe el lugar a mover (posicion_elegida), se obtienen coordenadas y se valida: el espacio debe estar libre y el lugar a mover debe ser aledaño a posicion_previa (puede_recibir), si el jugador esta en la fase 3 solo es necesario el espacio libre. Se aumenta el contador de movimientos del jugador, se realiza el movimiento en el tablero (mover) y se actualizan los datos en la matriz fichas (actualizar_datos_fase2).
 
 	hay_ficha = false
 	DO WHILE (hay_ficha == false || (puede_mover() == false && jugador[i].fase3 == false)):
@@ -92,6 +92,14 @@ FUNCIONES:
 	jugador[i].cant_mov++
 	mover()
 	actualizar_datos_fase2()
+
+-puede_mover: evalua si los casilleros adyacentes a posicion_elegida estan libres.
+
+	switch(posicion_elegida): 'A' -> if (B == b0 || J == j0) -> return true/ else return false
+
+-puede_recibir: evalua si la posicion_elegida es adyacente a la posicion_previa.
+
+	switch(posicion_previa): 'A' -> if (posicion_elegida == 'B' || posicion_elegida == 'J') -> return true/ else return false
 
 
 -mover: se obtienen las coordenadas de posicion_elegida y se pone el simbolo segun corresponda x/y. Además se restaura posicion_previa a su estado original.
