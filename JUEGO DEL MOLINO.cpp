@@ -87,6 +87,7 @@ ficha** fichas;
 char** tablero, ** molino, ** reglas, ** upc, ** opciones_1, ** opciones_2, ** opciones_3, ** nombre_1, ** nombre_2, ** nombre_3, ** nombre_4;;
 
 //------------------------------------------------------------------------------
+
 void premios();
 
 void cambiar_turno();
@@ -170,6 +171,7 @@ int main() {
 }
 
 //------------------------------------------------------------------------------
+
 void premios() {
 	do {
 		cls;
